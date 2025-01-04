@@ -1,11 +1,10 @@
-const { configureStore } = require("@reduxjs/toolkit");
+import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 
-
 const appStote = configureStore({
-    reducer : {
- user : userReducer
-    }
-})
+  reducer: {
+    user: userReducer,
+  },
+});
 
 export default appStote;
