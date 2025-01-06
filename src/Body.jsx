@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Footer } from "./Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "./utils/userSlice";
 import axios from "axios";
 
@@ -17,10 +17,10 @@ const Body = () => {
       });
       dispatch(addUser(res.data));
     } catch (err) {
-      if(err.status === 401){
-        navigate("/login")
+      if (err.status === 401) {
+        navigate("/login");
       }
-    
+
       console.error(err);
     }
   };
