@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassowrd] = useState("");
+  const [error,setError] =useState("")
   const dispatch = useDispatch();
   const navigate =useNavigate()
 
@@ -28,7 +29,8 @@ const Login = () => {
       dispatch(addUser(res.data))
       navigate("/")
     } catch (err) {
-      console.error(err);
+      setError(err?.response?.data)
+       
     }
   };
   return (
@@ -75,6 +77,7 @@ const Login = () => {
               onChange={(e) => setPassowrd(e.target.value)}
             />
           </label>
+          <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
