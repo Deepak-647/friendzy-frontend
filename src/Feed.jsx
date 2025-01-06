@@ -1,9 +1,23 @@
-import React from 'react'
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addFeed } from "./utils/feedSlice";
 
 const Feed = () => {
-  return (
-    <div>Feed</div>
-  )
-}
+  const dispatch = useDispatch();
 
-export default Feed
+  const getFeed = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/feed",{withCredentials:true});
+      dispatch(addFeed(res.data));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getFeed();
+  }, []);
+  return <div>Feed</div>;
+};
+
+export default Feed;
