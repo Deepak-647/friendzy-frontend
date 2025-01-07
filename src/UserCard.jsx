@@ -10,10 +10,11 @@ const UserCard = ({user}) => {
         alt="photo"
         className="rounded-xl" />
     </figure>
-    <div className="card-body items-center text-center">
+    <div className="card-body items-center text-center flex-grow-0">
       <h2 className="card-title">{firstName + " "+ lastName}</h2>
-      <p>{about}</p>
+      
      {age && gender && <p>{ age + " , "+  gender}</p>}
+     <p>{about}</p>
       <div className="card-actions">
         <button className="btn btn-secondary">Interested</button>
         <button className="btn btn-primary">ignore</button>
