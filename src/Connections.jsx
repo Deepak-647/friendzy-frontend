@@ -21,7 +21,7 @@ const Connections = () => {
     fetchConnections();
   }, []);
   if (!connections) return;
-  if (connections.length == 0) return <h1>You don't have any connections</h1>;
+  if (connections.length == 0) return <h1 className="text-center text-bold text-2xl my-10">You don't have any connections</h1>;
 console.log(connections)
   return (
     <div className="text-center my-10">
