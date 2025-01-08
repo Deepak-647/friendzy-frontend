@@ -5,14 +5,16 @@ import { addUser } from "./utils/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
   const [password, setPassowrd] = useState("");
-  const [error,setError] =useState("")
+  const [isLoginForm, setIsLoginForm] = useState(false);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navigate =useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
-    
     try {
       const res = await axios.post(
         "http://localhost:3000/login",
@@ -23,23 +25,74 @@ const Login = () => {
         {
           withCredentials: true,
         }
-        
       );
- 
-      dispatch(addUser(res.data))
-      navigate("/")
+
+      dispatch(addUser(res.data));
+      navigate("/");
     } catch (err) {
-      setError(err?.response?.data)
-       
+      setError(err?.response?.data);
     }
+  };
+  const handleSignup = async () => {
+    try{
+      const res = await axios.post(
+        "http://localhost:3000/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res.data.data));
+      navigate("/profile");
+    }catch(err){
+      setError(err?.response?.data);
+    }
+    
   };
   return (
     <div className="flex justify-center my-4">
       <div className="card bg-base-200 w-96 shadow-xl ">
         <div className="card-body">
-          <h2 className="card-title justify-center">Login !</h2>
-
-          <label className="input input-bordered flex items-center gap-2 my-4">
+          <h2 className="card-title justify-center">
+            {isLoginForm ? "Login !" : "Sign Up !"}
+          </h2>
+          {!isLoginForm && (
+            <>
+              <label className="input input-bordered flex items-center gap-2 my-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                </svg>
+                <input
+                  type="text"
+                  value={firstName}
+                  className="grow"
+                  placeholder="FirstName"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2 my-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                </svg>
+                <input
+                  type="text"
+                  value={lastName}
+                  className="grow"
+                  placeholder="LastName"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </label>
+            </>
+          )}
+          <label className="input input-bordered flex items-center gap-2 my-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -56,8 +109,7 @@ const Login = () => {
               onChange={(e) => setEmailId(e.target.value)}
             />
           </label>
-
-          <label className="input input-bordered flex items-center gap-2 my-4">
+          <label className="input input-bordered flex items-center gap-2 my-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -79,10 +131,22 @@ const Login = () => {
           </label>
           <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleLogin}>
-              Login
+            <button
+              className="btn btn-primary"
+              onClick={isLoginForm ? handleLogin : handleSignup}
+            >
+              {isLoginForm ? "Login" : "SignUp"}
             </button>
           </div>
+          <p>
+            {isLoginForm ? "New User ? " : "Already an User ? "}{" "}
+            <span
+              className="cursor-pointer hover:border-b-2"
+              onClick={() => setIsLoginForm((value) => !value)}
+            >
+              {isLoginForm ? "Sign Up" : "Login"}
+            </span>
+          </p>
         </div>
       </div>
     </div>
