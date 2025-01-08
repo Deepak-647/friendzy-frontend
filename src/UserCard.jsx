@@ -1,27 +1,42 @@
-import React from 'react'
+import axios from "axios";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { removeUserFromFeed } from "./utils/feedSlice";
 
-const UserCard = ({user}) => {
-   const {firstName,lastName,photoUrl,about,age,gender} = user
+const UserCard = ({ user }) => {
+  const { _id,firstName, lastName, photoUrl, about, age, gender } = user;
+  const dispatch = useDispatch()
+  const handleSendRequest = async (status, _id) => {
+   
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/request/send/" + status + "/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeUserFromFeed(_id))
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-     <div className="card bg-base-300 w-96 shadow-xl flex justify-center">
-    <figure className="px-10 pt-10">
-      <img
-        src={photoUrl}
-        alt="photo"
-        className="rounded-xl" />
-    </figure>
-    <div className="card-body items-center text-center flex-grow-0">
-      <h2 className="card-title">{firstName + " "+ lastName}</h2>
-      
-     {age && gender && <p>{ age + " , "+  gender}</p>}
-     <p>{about}</p>
-      <div className="card-actions">
-        <button className="btn btn-secondary">Interested</button>
-        <button className="btn btn-primary">ignore</button>
+    <div className="card bg-base-300 w-96 shadow-xl flex justify-center">
+      <figure className="px-10 pt-10">
+        <img src={photoUrl} alt="photo" className="rounded-xl" />
+      </figure>
+      <div className="card-body items-center text-center flex-grow-0">
+        <h2 className="card-title">{firstName + " " + lastName}</h2>
+
+        {age && gender && <p>{age + " , " + gender}</p>}
+        <p>{about}</p>
+        <div className="card-actions">
+          <button className="btn btn-secondary" onClick={()=>handleSendRequest("interested",_id)}>Interested</button>
+          <button className="btn btn-primary" onClick={()=>handleSendRequest("ignored",_id)}>ignore</button>
+        </div>
       </div>
     </div>
-  </div> 
-  )
-}
+  );
+};
 
-export default UserCard
+export default UserCard;
