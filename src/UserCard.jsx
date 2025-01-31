@@ -21,9 +21,9 @@ const UserCard = ({ user }) => {
   };
 
   return (
-    <div className="card bg-base-300 w-96 shadow-xl flex justify-center">
+    <div className="card bg-base-300 w-72 sm:w-96 shadow-xl flex justify-center my-4 sm:my-0 mx-auto">
       <figure className="px-10 pt-10">
-        <img src={photoUrl} alt="photo" className="rounded-xl" />
+        <img src={photoUrl} alt="photo" className="rounded-xl h-20 sm:h-44" />
       </figure>
       <div className="card-body items-center text-center flex-grow-0">
         <h2 className="card-title">{firstName + " " + lastName}</h2>

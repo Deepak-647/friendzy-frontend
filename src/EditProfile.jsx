@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "./utils/userSlice";
@@ -39,8 +39,8 @@ const EditProfile = ({ user }) => {
     }
   };
   return (
-    <>
-    <div className="flex justify-center my-8">
+    <div className="mx-auto">
+    <div className="flex justify-center sm:my-4 my-6  flex-col sm:flex-row ">
       <div className="flex justify-center mx-10">
         <div className="card bg-base-200 w-96 shadow-xl ">
           <div className="card-body">
@@ -103,7 +103,7 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       </div>
-      <UserCard user={{ firstName, lastName, age, gender, photoUrl, about }} />
+      <UserCard user={{ firstName, lastName, age, gender, photoUrl, about }}/>
     </div>
     {showToast && (
         <div className="toast toast-top toast-center">
@@ -112,7 +112,7 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
