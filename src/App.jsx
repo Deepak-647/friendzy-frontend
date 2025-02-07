@@ -8,6 +8,7 @@ import appStote from "./utils/appStore";
 import Feed from "./Feed";
 import Connections from "./Connections";
 import Requests from "./Requests";
+import Chats from "./Chats";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
+              <Route path="/chat/:toUserid" element={<Chats />} />
             </Route>
           </Routes>
         </BrowserRouter>
