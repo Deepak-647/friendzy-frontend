@@ -37,9 +37,9 @@ const Chats = () => {
     }
     const socket = createSocketConnection();
     socket.emit("joinChat", { firstName: user.firstName, userId, toTargetId });
-    socket.on("newMessageRecieved", ({ firstName, text }) => {
+    socket.on("newMessageRecieved", ({ firstName, lastName,text }) => {
       console.log(firstName + " : " + text);
-      setMessages((messages) => [...messages, { firstName, text }]);
+      setMessages((messages) => [...messages, { firstName,lastName, text }]);
     });
 
     return () => {
@@ -51,6 +51,7 @@ const Chats = () => {
     const socket = createSocketConnection();
     socket.emit("sendMessage", {
       firstName: user.firstName,
+      lastName : user.lastName,
       userId,
       toTargetId,
       text: newMessage,
