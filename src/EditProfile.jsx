@@ -40,43 +40,43 @@ const EditProfile = ({ user }) => {
     }
   };
   return (
-    <div className="mx-auto">
-    <div className="flex justify-center sm:my-4 my-6  flex-col sm:flex-row ">
-      <div className="flex justify-center mx-10">
-        <div className="card bg-base-200 w-96 shadow-xl ">
-          <div className="card-body">
-            <h2 className="card-title justify-center">Edit Profile</h2>
+    <div className="mx-auto min-h-[75vh]">
+      <div className="flex justify-center sm:my-4 my-6  flex-col sm:flex-row ">
+        <div className="flex justify-center mx-10">
+          <div className="card bg-base-200 w-96 shadow-xl ">
+            <div className="card-body">
+              <h2 className="card-title justify-center">Edit Profile</h2>
 
-            <label className="input input-bordered flex items-center gap-2 my-2">
-              <input
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </label>
+              <label className="input input-bordered flex items-center gap-2 my-2">
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </label>
 
-            <label className="input input-bordered flex items-center gap-2 my-2">
-              <input
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </label>
-            <label className="input input-bordered flex items-center gap-2 my-2">
-              <input
-                type="text"
-                value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
-              />
-            </label>
-            <label className="input input-bordered flex items-center gap-2 my-2">
-              <input
-                type="text"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-            </label>
-     
+              <label className="input input-bordered flex items-center gap-2 my-2">
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2 my-2">
+                <input
+                  type="text"
+                  value={photoUrl}
+                  onChange={(e) => setPhotoUrl(e.target.value)}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2 my-2">
+                <input
+                  type="text"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </label>
+
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
@@ -89,24 +89,28 @@ const EditProfile = ({ user }) => {
                 <option value="female">Female</option>
                 <option value="others">Others</option>
               </select>
-   
 
-            
-            <textarea className="textarea textarea-bordered" value={about}
-                onChange={(e) => setAbout(e.target.value)} placeholder="Bio"></textarea>
+              <textarea
+                className="textarea textarea-bordered"
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+                placeholder="Bio"
+              ></textarea>
 
-            <p className="text-red-500">{error}</p>
-            <div className="card-actions justify-center">
-              <button className="btn btn-primary" onClick={saveProfile}>
-                Save Profile
-              </button>
+              <p className="text-red-500">{error}</p>
+              <div className="card-actions justify-center">
+                <button className="btn btn-primary" onClick={saveProfile}>
+                  Save Profile
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        <UserCard
+          user={{ firstName, lastName, age, gender, photoUrl, about }}
+        />
       </div>
-      <UserCard user={{ firstName, lastName, age, gender, photoUrl, about }}/>
-    </div>
-    {showToast && (
+      {showToast && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
             <span>Profile saved successfully.</span>

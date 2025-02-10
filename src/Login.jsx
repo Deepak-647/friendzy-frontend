@@ -9,7 +9,7 @@ const Login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
-  const [password, setPassowrd] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
@@ -19,23 +19,18 @@ const Login = () => {
     try {
       const res = await axios.post(
         BASE_URL + "/login",
-        {
-          emailId,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
+        { emailId, password },
+        { withCredentials: true }
       );
-
       dispatch(addUser(res.data));
       navigate("/");
     } catch (err) {
       setError(err?.response?.data);
     }
   };
+
   const handleSignup = async () => {
-    try{
+    try {
       const res = await axios.post(
         BASE_URL + "/signup",
         { firstName, lastName, emailId, password },
@@ -43,107 +38,64 @@ const Login = () => {
       );
       dispatch(addUser(res.data.data));
       navigate("/profile");
-    }catch(err){
+    } catch (err) {
       setError(err?.response?.data);
     }
-    
   };
+
   return (
-    <div className="flex justify-center my-4">
-      <div className="card bg-base-200 w-96 shadow-xl ">
+    <div className="flex justify-center items-center   bg-black text-white p-4 min-h-[75vh]">
+      <div className="card bg-gray-900 w-full max-w-md shadow-xl rounded-lg p-6 md:p-8">
         <div className="card-body">
-          <h2 className="card-title justify-center">
-            {isLoginForm ? "Login !" : "Sign Up !"}
+          <h2 className="text-center text-2xl font-semibold mb-4">
+            {isLoginForm ? "Login" : "Sign Up"}
           </h2>
           {!isLoginForm && (
             <>
-              <label className="input input-bordered flex items-center gap-2 my-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70"
-                >
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                </svg>
-                <input
-                  type="text"
-                  value={firstName}
-                  className="grow"
-                  placeholder="FirstName"
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </label>
-              <label className="input input-bordered flex items-center gap-2 my-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70"
-                >
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                </svg>
-                <input
-                  type="text"
-                  value={lastName}
-                  className="grow"
-                  placeholder="LastName"
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </label>
+              <input
+                type="text"
+                value={firstName}
+                className="input input-bordered w-full my-2 bg-gray-800 text-white"
+                placeholder="First Name"
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <input
+                type="text"
+                value={lastName}
+                className="input input-bordered w-full my-2 bg-gray-800 text-white"
+                placeholder="Last Name"
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </>
           )}
-          <label className="input input-bordered flex items-center gap-2 my-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-            </svg>
-            <input
-              type="text"
-              value={emailId}
-              placeholder="Email"
-              onChange={(e) => setEmailId(e.target.value)}
-            />
-          </label>
-          <label className="input input-bordered flex items-center gap-2 my-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <input
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassowrd(e.target.value)}
-            />
-          </label>
-          <p className="text-red-500">{error}</p>
-          <div className="card-actions justify-center">
+          <input
+            type="text"
+            value={emailId}
+            className="input input-bordered w-full my-2 bg-gray-800 text-white"
+            placeholder="Email"
+            onChange={(e) => setEmailId(e.target.value)}
+          />
+          <input
+            type="password"
+            value={password}
+            className="input input-bordered w-full my-2 bg-gray-800 text-white"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <p className="text-red-500 text-center">{error}</p>
+          <div className="card-actions flex justify-center">
             <button
-              className="btn btn-primary"
+              className="btn btn-primary w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
               onClick={isLoginForm ? handleLogin : handleSignup}
             >
-              {isLoginForm ? "Login" : "SignUp"}
+              {isLoginForm ? "Login" : "Sign Up"}
             </button>
           </div>
-          <p>
-            {isLoginForm ? "New User ? " : "Already an User ? "}{" "}
+          <p className="text-center mt-4">
+            {isLoginForm ? "New user? " : "Already have an account? "}
             <span
-              className="cursor-pointer hover:border-b-2"
-              onClick={() => setIsLoginForm((value) => !value)}
+              className="text-blue-400 cursor-pointer hover:underline"
+              onClick={() => setIsLoginForm(!isLoginForm)}
             >
               {isLoginForm ? "Sign Up" : "Login"}
             </span>

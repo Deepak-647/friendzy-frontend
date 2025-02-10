@@ -12,11 +12,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        BASE_URL + "/logout",
-        {},
-        { withCredentials: true }
-      );
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
       dispatch(removeUser());
       return navigate("/login");
     } catch (err) {
@@ -24,7 +20,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="navbar bg-base-200 pb-6">
+    <div className="navbar bg-base-200 pb-6 min-h-[10vh]">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">
           FriendZY
