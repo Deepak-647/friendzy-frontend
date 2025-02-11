@@ -5,7 +5,8 @@ import { removeUserFromFeed } from "./utils/feedSlice";
 import { BASE_URL } from "./utils/constants";
 
 const UserCard = ({ user }) => {
-  const { _id, firstName, lastName, photoUrl, about, age, gender } = user;
+  const { _id, firstName, lastName, photo, about, age, gender } = user;
+
   const dispatch = useDispatch();
   const handleSendRequest = async (status, _id) => {
     try {
@@ -24,7 +25,7 @@ const UserCard = ({ user }) => {
     <div className="card bg-base-300 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl shadow-xl flex flex-col items-center p-4 sm:p-6 mx-auto">
       <figure className="w-full flex justify-center">
         <img
-          src={photoUrl}
+          src={BASE_URL + "/" + photo}
           alt="photo"
           className="rounded-xl w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 object-cover"
         />

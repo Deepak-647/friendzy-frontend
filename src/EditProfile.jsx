@@ -8,7 +8,7 @@ import { BASE_URL } from "./utils/constants";
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
-  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [photo, setPhoto] = useState(user.photo);
   const [age, setAge] = useState(user.age || "Age");
   const [gender, setGender] = useState(user.gender || "Gender");
   const [about, setAbout] = useState(user.about || "About");
@@ -16,34 +16,44 @@ const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
 
+  const handlePhotoChange = (e) => {
+    setPhoto(e.target.files[0]);
+  };
+
   const saveProfile = async () => {
     try {
-      const res = await axios.patch(
-        BASE_URL + "/profile/edit",
-        {
-          firstName,
-          lastName,
-          photoUrl,
-          age,
-          gender,
-          about,
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("age", age);
+      formData.append("gender", gender);
+      formData.append("about", about);
+      if (photo) {
+        formData.append("photo", photo);
+      }
+
+      const res = await axios.patch(BASE_URL + "/profile/edit", formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        { withCredentials: true }
-      );
+      });
+
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
       setTimeout(() => {
         setShowToast(false);
       }, 3000);
     } catch (err) {
-      setError(err);
+      setError("Failed to update profile. Try again.");
     }
   };
+
   return (
     <div className="mx-auto min-h-[75vh]">
-      <div className="flex justify-center sm:my-4 my-6  flex-col sm:flex-row ">
+      <div className="flex justify-center sm:my-4 my-6 flex-col sm:flex-row">
         <div className="flex justify-center mx-10">
-          <div className="card bg-base-200 w-96 shadow-xl ">
+          <div className="card bg-base-200 w-96 shadow-xl">
             <div className="card-body">
               <h2 className="card-title justify-center">Edit Profile</h2>
 
@@ -62,13 +72,7 @@ const EditProfile = ({ user }) => {
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </label>
-              <label className="input input-bordered flex items-center gap-2 my-2">
-                <input
-                  type="text"
-                  value={photoUrl}
-                  onChange={(e) => setPhotoUrl(e.target.value)}
-                />
-              </label>
+
               <label className="input input-bordered flex items-center gap-2 my-2">
                 <input
                   type="text"
@@ -97,6 +101,13 @@ const EditProfile = ({ user }) => {
                 placeholder="Bio"
               ></textarea>
 
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="file-input file-input-bordered w-full my-2"
+              />
+
               <p className="text-red-500">{error}</p>
               <div className="card-actions justify-center">
                 <button className="btn btn-primary" onClick={saveProfile}>
@@ -106,9 +117,7 @@ const EditProfile = ({ user }) => {
             </div>
           </div>
         </div>
-        <UserCard
-          user={{ firstName, lastName, age, gender, photoUrl, about }}
-        />
+        <UserCard user={{ firstName, lastName, age, gender, photo, about }} />
       </div>
       {showToast && (
         <div className="toast toast-top toast-center">
