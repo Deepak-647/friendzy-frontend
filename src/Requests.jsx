@@ -46,7 +46,7 @@ const Requests = () => {
       <h1 className="font-bold text-2xl">Requests</h1>
       <div className="flex flex-wrap justify-center gap-4 mt-6">
         {requests.map((request) => {
-          const { _id, firstName, lastName, age, gender, about, photoUrl } =
+          const { _id, firstName, lastName, age, gender, about, photo } =
             request.fromUserId;
 
           return (
@@ -57,7 +57,7 @@ const Requests = () => {
               <img
                 alt="photo-user"
                 className="h-28 w-28 rounded-md object-cover"
-                src={photoUrl}
+                src={BASE_URL+"/"+photo}
               />
               <div className="flex flex-col text-left ml-4 flex-grow">
                 <h2 className="font-semibold text-lg">

@@ -35,7 +35,7 @@ const Connections = () => {
       <h1 className="font-bold text-2xl sm:text-3xl">Connections</h1>
       <div className="flex flex-wrap justify-center gap-4 mt-6">
         {connections.map((connection) => {
-          const { _id, firstName, lastName, age, gender, about, photoUrl } =
+          const { _id, firstName, lastName, age, gender, about, photo } =
             connection;
 
           return (
@@ -47,7 +47,7 @@ const Connections = () => {
               <img
                 alt="photo-user"
                 className="h-24 w-24 sm:h-28 sm:w-28 rounded-md object-cover"
-                src={photoUrl}
+                src={BASE_URL+"/"+photo}
               />
 
               {/* Text Content */}
