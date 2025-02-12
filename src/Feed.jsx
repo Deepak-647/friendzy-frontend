@@ -25,13 +25,13 @@ const Feed = () => {
   if (!feed) return;
   if (feed.length == 0)
     return (
-      <h1 className="text-center text-bold text-2xl my-10 min-h-[75vh]">
+      <h1 className="text-center text-bold text-2xl my-10 min-h-[78vh]">
         No Users Available{" "}
       </h1>
     );
   return (
     feed && (
-      <div className="flex justify-center my-4 min-h-[75vh]">
+      <div className="flex justify-center my-4 min-h-[78vh]">
         <UserCard user={feed[0]} />
       </div>
     )

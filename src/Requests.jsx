@@ -36,13 +36,13 @@ const Requests = () => {
   if (!requests) return;
   if (requests.length == 0)
     return (
-      <h1 className="text-center text-bold text-2xl my-10 min-h-[75vh]">
+      <h1 className="text-center text-bold text-2xl my-10 min-h-[78vh]">
         You don't have any requests
       </h1>
     );
 
   return (
-    <div className="text-center my-10 min-h-[75vh]">
+    <div className="text-center my-10 min-h-[78vh]">
       <h1 className="font-bold text-2xl">Requests</h1>
       <div className="flex flex-wrap justify-center gap-4 mt-6">
         {requests.map((request) => {

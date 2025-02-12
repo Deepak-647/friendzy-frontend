@@ -4,6 +4,7 @@ import { createSocketConnection } from "./utils/socket";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "./utils/constants";
+import { formatTimestamp } from "./utils/curTime";
 
 const Chats = () => {
   const { toTargetId } = useParams();
@@ -20,11 +21,12 @@ const Chats = () => {
     console.log(chat.data.messages);
 
     const chatMessages = chat?.data?.messages.map((msg) => {
-      const { senderId, text } = msg;
+      const { senderId, text ,createdAt } = msg;
       return {
         firstName: senderId?.firstName,
         lastName: senderId?.lastName,
         text,
+        time : formatTimestamp(createdAt)
       };
     });
     setMessages(chatMessages);
@@ -40,9 +42,8 @@ const Chats = () => {
     }
     const socket = createSocketConnection();
     socket.emit("joinChat", { firstName: user.firstName, userId, toTargetId });
-    socket.on("newMessageRecieved", ({ firstName, lastName, text }) => {
-      console.log(firstName + " : " + text);
-      setMessages((messages) => [...messages, { firstName, lastName, text }]);
+    socket.on("newMessageRecieved", ({ firstName, lastName, text ,createdAt }) => {
+      setMessages((messages) => [...messages, { firstName, lastName, text, time: formatTimestamp(createdAt || Date.now())}]);
     });
 
     return () => {
@@ -63,8 +64,11 @@ const Chats = () => {
       userId,
       toTargetId,
       text: newMessage,
+      createdAt: Date.now(),
     });
     setNewMessage("");
+    
+
   };
 
   return (
@@ -82,7 +86,7 @@ const Chats = () => {
           >
             <div className="chat-header text-sm text-gray-400">
               {msg.firstName + " " + msg.lastName}
-              <time className="text-xs opacity-50 ml-2">Just now</time>
+              <time className="text-xs opacity-50 ml-2">{msg.time}</time>
             </div>
             <div
               className={`chat-bubble p-3 rounded-lg text-white ${
@@ -92,7 +96,7 @@ const Chats = () => {
               {msg.text}
             </div>
             <div className="chat-footer text-xs text-gray-400 opacity-50">
-              Seen
+              {msg.firstName === user.firstName ? "Sent" : ""}
             </div>
           </div>
         ))}

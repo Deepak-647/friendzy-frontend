@@ -50,7 +50,7 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="mx-auto min-h-[75vh]">
+    <div className="mx-auto min-h-[78vh]">
       <div className="flex justify-center sm:my-4 my-6 flex-col sm:flex-row">
         <div className="flex justify-center mx-10">
           <div className="card bg-base-200 w-96 shadow-xl">
