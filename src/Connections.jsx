@@ -29,7 +29,7 @@ const Connections = () => {
         You don't have any connections
       </h1>
     );
-  console.log(connections);
+
   return (
     <div className="text-center my-10">
       <h1 className="font-bold text-2xl sm:text-3xl">Connections</h1>
@@ -47,7 +47,7 @@ const Connections = () => {
               <img
                 alt="photo-user"
                 className="h-24 w-24 sm:h-28 sm:w-28 rounded-md object-cover"
-                src={BASE_URL+"/"+photo}
+                src={photo ? `${BASE_URL}/${photo}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
               />
 
               {/* Text Content */}
@@ -64,7 +64,7 @@ const Connections = () => {
               </div>
 
               {/* Chat Button */}
-              <Link to={`/chat/${_id}`}>
+              <Link to={`/chat/${_id}`} state={{ firstName, lastName, photo }}>
                 <button className="btn btn-primary px-4 py-2">Chat</button>
               </Link>
             </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "./utils/userSlice";
@@ -9,6 +9,7 @@ const Navbar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [dropdown, setDropdown] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -40,6 +41,10 @@ const Navbar = () => {
               tabIndex={0}
               role="button"
               className="btn btn-ghost btn-circle avatar"
+              onClick={(e) => {
+                e.preventDefault();
+                setDropdown(!dropdown);
+              }}
             >
               <div className="w-10 rounded-full">
                 <img
@@ -49,25 +54,35 @@ const Navbar = () => {
               </div>
               <p> {user.firstName}</p>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                </Link>
-              </li>
-              <li>
-                <Link to="/connections">Connections</Link>
-              </li>
-              <li>
-                <Link to="/requests">Requests</Link>
-              </li>
-              <li>
-                <a onClick={handleLogout}>Logout</a>
-              </li>
-            </ul>
+            {dropdown && (
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <Link
+                    to="/profile"
+                    className="justify-between"
+                    onClick={() => setDropdown(false)}
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/connections" onClick={() => setDropdown(false)}>
+                    Connections
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/requests" onClick={() => setDropdown(false)}>
+                    Requests
+                  </Link>
+                </li>
+                <li>
+                  <a onClick={handleLogout}>Logout</a>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       )}
