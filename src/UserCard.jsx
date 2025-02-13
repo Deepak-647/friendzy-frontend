@@ -25,9 +25,9 @@ const UserCard = ({ user }) => {
     <div className="card bg-base-300 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl shadow-xl flex flex-col items-center p-4 sm:p-6 mx-auto">
       <figure className="w-full flex justify-center">
         <img
-          src={BASE_URL + "/" + photo}
+          src={photo ? `${BASE_URL}/${photo}` : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
           alt="photo"
-          className="rounded-xl w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 object-cover"
+          className="rounded-full w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 object-cover"
         />
       </figure>
       <div className="card-body text-center w-full flex flex-col items-center">
