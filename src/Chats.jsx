@@ -12,6 +12,7 @@ const Chats = () => {
   const { toTargetId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState({}); // Store online users
   const [connectionDetails, setConnectionDetails] = useState({
     firstName: "",
     lastName: "",
@@ -53,7 +54,16 @@ const Chats = () => {
       return;
     }
     const socket = createSocketConnection();
+
+    socket.emit("user-online", userId); // Mark current user as online
+
     socket.emit("joinChat", { firstName: user.firstName, userId, toTargetId });
+
+    // Listen for online users
+    socket.on("update-user-status", (users) => {
+      setOnlineUsers(users);
+    });
+
     socket.on(
       "newMessageRecieved",
       ({ firstName, lastName, text, createdAt }) => {
@@ -97,15 +107,26 @@ const Chats = () => {
       {/* Header Section with Profile Picture */}
       <div className="flex items-center gap-4 p-5 border-b border-gray-600 bg-gray-800 text-white">
         <img
-          src={connectionDetails?.photo
-            ? `${BASE_URL}/${connectionDetails.photo}`
-            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
+          src={
+            connectionDetails?.photo
+              ? `${BASE_URL}/${connectionDetails.photo}`
+              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          }
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover"
         />
+        <div>
         <h1 className="text-lg font-semibold">
           {connectionDetails.firstName + " " + connectionDetails.lastName}
         </h1>
+        <span className="text-sm">
+            {onlineUsers[toTargetId] ? (
+              <span className="text-green-500">🟢 Online</span>
+            ) : (
+              <span className="text-gray-500">⚫ Offline</span>
+            )}
+          </span>
+        </div>
       </div>
       {/* Messages Section */}
       <div className="flex-1 overflow-auto p-5 bg-gray-900 text-white">
