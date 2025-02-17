@@ -58,6 +58,12 @@ const Login = () => {
                 className="input input-bordered w-full my-2 bg-gray-800 text-white"
                 placeholder="First Name"
                 onChange={(e) => setFirstName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
+                    isLoginForm?  handleLogin() : handleSignup();
+                  }
+                }}
               />
               <input
                 type="text"
@@ -65,6 +71,12 @@ const Login = () => {
                 className="input input-bordered w-full my-2 bg-gray-800 text-white"
                 placeholder="Last Name"
                 onChange={(e) => setLastName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
+                    isLoginForm?  handleLogin() : handleSignup();
+                  }
+                }}
               />
             </>
           )}
@@ -74,6 +86,12 @@ const Login = () => {
             className="input input-bordered w-full my-2 bg-gray-800 text-white"
             placeholder="Email"
             onChange={(e) => setEmailId(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
+                isLoginForm?  handleLogin() : handleSignup();
+              }
+            }}
           />
           <input
             type="password"
@@ -81,6 +99,12 @@ const Login = () => {
             className="input input-bordered w-full my-2 bg-gray-800 text-white"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
+                isLoginForm?  handleLogin() : handleSignup();
+              }
+            }}
           />
           <p className="text-red-500 text-center">{error}</p>
           <div className="card-actions flex justify-center">

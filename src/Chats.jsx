@@ -181,7 +181,14 @@ const Chats = () => {
 
       {/* Input */}
       <div className="p-5 border-t border-gray-600 flex items-center gap-2 bg-gray-800">
-        <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} type="text" className="flex-1 border border-gray-600 text-white rounded-lg p-2 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type a message..." />
+        <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} 
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
+              sendMessage();
+            }
+          }}
+          type="text" className="flex-1 border border-gray-600 text-white rounded-lg p-2 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type a message..." />
         <button onClick={sendMessage} className="btn btn-secondary px-4 py-2">Send</button>
       </div>
     </div>
