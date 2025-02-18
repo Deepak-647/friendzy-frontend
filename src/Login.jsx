@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "./utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "./utils/constants";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 
 const Login = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,6 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -61,7 +63,7 @@ const Login = () => {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
-                    isLoginForm?  handleLogin() : handleSignup();
+                    isLoginForm ? handleLogin() : handleSignup();
                   }
                 }}
               />
@@ -74,7 +76,7 @@ const Login = () => {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
-                    isLoginForm?  handleLogin() : handleSignup();
+                    isLoginForm ? handleLogin() : handleSignup();
                   }
                 }}
               />
@@ -89,12 +91,13 @@ const Login = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
-                isLoginForm?  handleLogin() : handleSignup();
+                isLoginForm ? handleLogin() : handleSignup();
               }
             }}
           />
+          <div className="relative w-full">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={password}
             className="input input-bordered w-full my-2 bg-gray-800 text-white"
             placeholder="Password"
@@ -102,10 +105,22 @@ const Login = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault(); // Prevents default behavior (e.g., new line in textarea)
-                isLoginForm?  handleLogin() : handleSignup();
+                isLoginForm ? handleLogin() : handleSignup();
               }
             }}
           />
+          <button
+            type="button"
+            className="absolute inset-y-0 right-2 flex items-center text-gray-400 hover:text-white"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <EyeOffIcon className="w-5 h-5" />
+            ) : (
+              <EyeIcon className="w-5 h-5" />
+            )}
+          </button>
+          </div>
           <p className="text-red-500 text-center">{error}</p>
           <div className="card-actions flex justify-center">
             <button
@@ -131,3 +146,4 @@ const Login = () => {
 };
 
 export default Login;
+
