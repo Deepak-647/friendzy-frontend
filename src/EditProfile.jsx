@@ -4,6 +4,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "./utils/userSlice";
 import { BASE_URL } from "./utils/constants";
+import imageCompression from "browser-image-compression";
+
 
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
@@ -17,7 +19,25 @@ const EditProfile = ({ user }) => {
   const [showToast, setShowToast] = useState(false);
 
   const handlePhotoChange = (e) => {
-    setPhoto(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file && file.size > 100 * 1024) { // 100KB limit
+      try {
+        const options = {
+          maxSizeMB: 0.1, // 100KB
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        };
+        const compressedFile = await imageCompression(file, options);
+        setError("");
+        setPhoto(compressedFile);
+      } catch (error) {
+        setError("Failed to compress image. Try again.");
+        setPhoto(null);
+      }
+    } else {
+      setError("");
+      setPhoto(file);
+    }
   };
 
   const saveProfile = async () => {
